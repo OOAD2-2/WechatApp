@@ -1,0 +1,69 @@
+<page>
+  <!--设置左上角的usersIcon-->
+  <view class="blueUsersView">
+    <image src="../../image/users.png" class='blueUsersIcon' />
+    <strong>队伍信息</strong>
+  </view>
+
+
+  <!--细线，hr不好设置css，用一个高度很小的view来代替-->
+  <view class="hrView">
+  </view>
+
+
+  <!--学生名单上面那个蓝色的bar-->
+  <view class='studentListBarView'>
+    <span>队伍1</span>
+    <span class="groupTopics">选题：</span>
+  </view>
+
+ <!--学生块，用整个view包住学生的部分，每次添加新学生能自动排好版，之后在span下面修改学生名字-->
+ <view class = 'studentView'>
+<view wx:for="{{studentList}}" wx:for-item="item"  >
+  <view class='studentBlock'>
+    <image src="../../user.png" class='userIcon' />
+    <span class="studentName">{{item.name}}</span>
+  </view>
+</view>
+
+  <view class='studentBlock'>
+    <image src="../../user.png" class='userIcon' />
+    <span class="studentName">王xx</span>
+    <image src="../../image/cancel.png" class='redCancelIcon' />
+  </view>
+  <!--空白添加学生的块-->
+  <view class='studentBlock'>
+    <image src="../../image/plus.png" class='addIcon' />
+  </view>
+</view>
+  <!--学生名单上面那个蓝色的bar-->
+  <view class='studentListBarView'>
+    <span>队伍2</span>
+    <span class="groupTopics">选题：</span>
+  </view>
+
+  <view class='studentListBarView'>
+    <span>队伍3</span>
+    <span class="groupTopics">选题：</span>
+  </view>
+  <view class='studentListBarView'>
+    <span>队伍4</span>
+    <span class="groupTopics">选题：</span>
+  </view>
+
+
+  <!--迟到学生上面那个蓝色的bar-->
+  <view class='studentNoCallBarView'>
+    <span>未签到学生</span>
+  </view>
+
+  <!--未签到学生，要增加新学生复制一个view，修改名字-->
+<view class = 'studentView'>
+  <view wx:for="{{latestudentList}}" wx:for-item="item"  >
+  <view class='studentBlock'>
+    <image src="../../user.png" class='userIcon' />
+    <span class="studentName">{{item.name}}</span>
+  </view>
+  </view>
+</view>
+</page>

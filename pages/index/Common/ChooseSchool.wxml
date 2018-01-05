@@ -1,0 +1,42 @@
+	<page>
+	 <view class="box5">  
+      <image src="../../images/bulb.png" class="img7"></image>
+      <image src="../../images/background.jpg" class="img8"></image>
+     <view class="FONT41">请选择您的学校</view> 
+   </view>
+
+  <view class="box6">
+	<button class="button1" wx:if="{{step==1}}">省份<view class="hrView"/></button>
+  <button class="button1" bindtap='step1' wx:else>{{pro}}</button>
+  <button class="button1" wx:if="{{step==1}}">州市</button>
+	<button class="button1" wx:elif="{{step==2}}">州市<view class="hrView"/></button>
+  <button class="button1" bindtap='step2' wx:else="{{strp==3}}">{{City}}</button>
+	<button class="button1" wx:if="{{step==3}}">学校<view class="hrView"/></button>
+  <button class="button1" wx:else>学校</button>
+	</view>
+
+	<view class="box7" >
+  <scroll-view scroll-y="true" class="scrollView">
+
+  <view wx:if="{{step==1}}" class="box8"  >
+  <block wx:for="{{province}}">
+  <button class="button2" bindtap='choosepro' data-name="{{province[index]}}">{{province[index]}}</button>
+  </block>
+  </view>
+
+  <view wx:elif="{{step==2}}" class="box8" >
+  <block  wx:for="{{city}}">
+  <button class="button2" bindtap='choosecity' data-city="{{city[index]}}">{{city[index]}}</button>
+  </block>
+  </view>
+
+  <view wx:else  class="box8" >
+  <block wx:for="{{school}}">
+  <button class="button2" bindtap='chooseschool' data-name="{{item.name}}" data-id="{{item.id}}">{{item.name}}</button>
+  </block>
+  <button class="button2" bindtap='createSchool' style="text-decoration: underline" wx:if="{{typeId == 1}}">创建学校</button>
+  </view>
+  
+  </scroll-view>
+	</view>
+</page>

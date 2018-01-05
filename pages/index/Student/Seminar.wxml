@@ -1,0 +1,28 @@
+<page>
+	<view class="topView">
+	<span class="title">{{seminar.courseName}}</span>
+		<span class="titleSmall"> {{seminar.name}}</span>
+	</view>
+	<view class="ScoreBoxGrey" wx:if="{{date<seminar.startTime}}">
+    <span class="ButtonTextRight" >打分</span></view>
+    <view class="ScoreBoxBlue" wx:else bindtap="Grade">
+    <span class="ButtonTextRight" >打分</span></view>
+    
+  <view class="CallBoxGrey" wx:if="{{date<seminar.startTime}}">
+    <span class="ButtonTextLeft">签到</span>
+  </view>
+  <view class="CallBoxBlue" wx:else bindtap="getRoll">
+    <span class="ButtonTextLeft" >签到</span>
+  </view>
+  
+	<view class="GroupBoxBlue" style="float:" bindtap='getGroup'>
+	  <text class="ButtonTextLeft">组队和选题</text>
+  </view>
+
+
+
+
+   <text class="noGroup" wx:if="{{date<seminar.startTime}}">讨论课还未开始，您可以查看固定分组信息。</text>
+   <!--space='emsp'设置读取空格-->
+   <text class="noGroup" space='emsp' wx:if="{{date<seminar.startTime}}">   其他请讨论课开始后进行操作</text>
+</page>

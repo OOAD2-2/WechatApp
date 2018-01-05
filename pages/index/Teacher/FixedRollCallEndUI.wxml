@@ -1,0 +1,36 @@
+<page>
+  <!--设置左上角的蓝色板-->
+  <view class="blueUsersView">
+  <image src="../../images/blueBoard.png" class='blueUsersIcon' bindtap='Confirm'/>
+  </view>
+  <view class='.classNameView'>班级:{{className}}</view>
+  <view class='.studentSumView'>签到人数：{{numPresent}}/{{numStudent}}</view>
+  <!--班级1 的字样-->
+
+<!--细线，hr不好设置css，用一个高度很小的view来代替-->
+  <view class="hrView">
+  </view>
+  <!--学生名单上面那个蓝色的bar-->
+  <view class='studentListBarView'>
+    已签到人员
+  </view>
+  <!--学生块，分为左边的和右边的，增加学生的时候选择好左边或者
+右边后直接复制就好，之后在span下面修改学生名字-->
+<view class='studentView'>
+  <view class='studentBlock' wx:for="{{present}}">
+    <image src="../../images/user.png" class='userIcon' />
+    <span class="studentName">{{present[index].name}}</span>
+  </view></view>
+
+  <span  wx:if="{{step==3}}">
+  <view class='studentNoCallBarView'>
+    迟到人员
+  </view>
+  <view wx:for="{{latestu}}" class='.studentView'>
+    <view class='studentBlock' >
+    <image src="../../images/user.png" class='userIcon' />
+    <span class="studentName">{{latestu[index].name}}</span>
+    </view>
+    </view>
+  </span>
+</page>

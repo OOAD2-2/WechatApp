@@ -1,0 +1,16 @@
+<page>
+  <view class="box5" style="position:relative;">
+    <!-- 背景图的view -->
+    <image class="img2" src="../../images/background.jpg"  />
+    <image class="img1" src="../../images/UserIcon.png"  bindtap='onClicked2'/>
+    <view class="FONT4 personName">姓名：{{Username}}</view>
+
+    <view class="FONT4 number" >学号：{{Usernumber}}</view>
+  </view>
+
+  <view class="box3" wx:for="{{classes}}" data-id="{{index}}" bindtap='onClicked1'>
+    <text class="FONT11"> {{classes[index].courseName}}</text>
+    <text class="FONT51"> 老师：{{classes[index].courseTeacher}}</text>
+  </view>
+
+</page>

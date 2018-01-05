@@ -1,0 +1,28 @@
+<!--pages/StudentClass/CourseUI/Seminar/Grade/grade.wxml-->
+<view class="seminarblock">	
+  <span class="column0"><image class="seminarimg" src="../../images/users.png" /></span>
+  <label class='greyword' wx:if="{{step==1}}">请为别的小组展示打分</label>
+  <label class='greyword' wx:else>您的打分结果</label>
+</view>
+
+<block>
+  <view wx:for="{{group}}" wx:for-index="groupindex" >
+    <label class='text'>{{group[groupindex].name}}</label>
+    <block wx:for="{{stars}}">
+  <image class="heart" wx:if="{{step==1}}" src="{{point[groupindex] >= item ? full_satr : empty_star}}" data-Grade="{{item}}" data-Group="{{groupindex}}"  bindtap="setGrade"/>
+  <image wx:else class="heart"  src="{{point[groupindex] >= item ? full_satr : empty_star}}" data-Grade="{{item}}" data-Group="{{groupindex}}" />
+</block>
+
+    <!--
+    <block wx:for="{{[1, 2, 3, 4, 5]}}" >
+      <image class='heart' src="../../images/heart_empty.png" data-id="{{index}}" bindtap='setGrade' 
+      wx:if="{{index>=i}}">
+      </image>
+      <image class='heart' src="../../images/heart_chosen.png" data-x="{{i}}" data-y="{{index}}" bindtap='setGrade' wx:else>
+      </image>
+    </block>   
+    -->
+  </view>
+</block>
+<button class="btnsubmit" bindtap='sub' wx:if="{{step==1}}">提交</button>
+

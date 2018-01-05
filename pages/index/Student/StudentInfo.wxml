@@ -1,0 +1,17 @@
+<!—CheckInfo.wxml-->
+<page>
+  <view class="topBoardView">  
+      <image src="../../images/background.jpg" class="topIcon"></image>
+      <image src="{{Avator}}" class="topHead" bindtap='clickAvator'></image>
+      <span class="topClickHead">点击头像以修改</span>
+      <span class="topName">姓名：{{Name}}</span>
+      <span class="topID">学号：{{Number}}</span>
+   </view>
+   <view class="mainView">
+      <span class="phone">电话：{{Phone}}</span>
+      <span class="ID">学号：{{Number}}</span>
+      <span class="name">姓名：{{Name}}</span>
+      <span class="school">学校：{{School}}</span>
+      <button class="confirmButton" bindtap='unBind'>解绑</button>
+   </view>
+</page>

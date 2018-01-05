@@ -1,0 +1,28 @@
+<page class="page">
+<view class="head20">
+	<text class="FONT1">{{courseName}}</text>
+  <image src='../../images/ninepot.png' class="ninePointToCourseInfo" bindtap='getInfo'/>
+</view>
+
+
+
+
+<view wx:for="{{seminar}}" wx:if="{{date<item.endTime&&date>item.startTime}}" class="box3" data-id="{{index}}" bindtap="Seminar" data-seminar-obj="{{item}}">
+  <text class="FONT12" > 讨论课{{item.id}}</text>
+	<text class="FONT2 seminarDate"> {{item.startTime}}至{{item.endTime}}</text>
+	<text class="FONT2 groupType" wx:if="{{item.groupingMethod=='fixed'}}"> 固定分组</text>
+  <text class="FONT2 groupType" wx:if="{{item.groupingMethod!='fixed'}}"> 随机分组</text>
+	<text class="FONT2 groupGrade" wx:if="{{item.grade==null}}"> 成绩：未完成</text>
+  <text class="FONT2 groupGrade" wx:else> 成绩：{{item.grade}}</text>
+</view>
+
+<view wx:for="{{seminar}}" wx:if="{{date>item.endTime||date<item.startTime}}" class="box4" data-id="{{index}}" bindtap="Seminar" data-seminar-obj="{{item}}">
+  <text class="FONT12" > 讨论课{{item.id}}</text>
+	<text class="FONT2 seminarDate"> {{item.startTime}}至{{item.endTime}}</text>
+	<text class="FONT2 groupType" wx:if="{{item.groupingMethod=='fixed'}}"> 固定分组</text>
+  <text class="FONT2 groupType" wx:if="{{item.groupingMethod!='fixed'}}"> 随机分组</text>
+	<text class="FONT2 groupGrade"> 成绩：未完成</text>
+</view>
+	
+	
+</page>

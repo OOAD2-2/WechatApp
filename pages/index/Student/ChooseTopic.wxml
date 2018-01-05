@@ -1,0 +1,52 @@
+<!--pages/StudentClass/CourseUI/Seminar/ChooseTopic/ChooseTopic.wxml-->
+<page>
+  <!--设置左上角的usersIcon-->
+  <view class="blueUsersView">
+    <image src="../../images/users.png" class='blueUsersIcon' />
+    <span class="title">请为您的队伍选题</span>
+  </view>
+
+  <!--细线，hr不好设置css，用一个高度很小的view来代替-->
+  <view class="hrView">
+  </view>
+
+  <!--当选题未选完时框是蓝色的，要增加新框就直接复制-->
+  <span wx:for="{{topic}}">
+  
+    <view class="blueTopicView" wx:if="{{topic[index].groupLeft>0}}" data-id="{{index}}" >
+    <view bindtap="choose">
+      <span class="topic" >话题{{topic[index].serial}}</span>
+      <view class="hrVertical"> </view>
+      <span class="topicName">{{topic[index].name}}</span>
+      <!--剩余选题数量大于等于2时-->
+      <span class="leftNumWhite" wx:if="{{topic[index].groupLeft>=2}}">剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupLimit}}</span>
+      <span class="leftNumRed" wx:else>剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupLimit}}</span>
+      </view>
+      <image src='../../images/ninepot.png' class="nineIcon" data-id="{{index}}" bindtap='getDes'></image>
+    </view>
+
+    <view class="greyTopicView" wx:else>
+      <span class="topic" >话题{{topic[index].serial}}</span>
+      <view class="hrVertical"> </view>
+      <span class="topicName">{{topic[index].name}}</span>
+      <!--剩余选题数量大于等于2时-->
+      <span class="leftNumWhite" >剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupLimit}}</span>
+      <image src='../../images/ninepot.png' class="nineIcon" data-id="{{index}}" bindtap='getDes'></image>
+    </view>
+    
+
+    <!--当点击九点时出现topic的简介-->
+    <view class="topicDescribeView" wx:if="{{index==temp}}">
+      <span class="topicDescribeTitle">
+        {{topic[index].name}}
+      </span>
+      <span class="topicDescribeText">
+        {{topic[index].description}}
+      </span>
+    </view>
+
+</span>
+
+  <!--无剩余名额时选题框为灰色-->
+ 
+</page>

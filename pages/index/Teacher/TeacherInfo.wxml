@@ -1,0 +1,17 @@
+<!—CheckInfo.wxml-->
+<page>
+  <view class="topBoardView">  
+      <image src="../../images/background.jpg" class="topIcon"></image>
+      <image src="{{src}}" class="topHead" bindtap='topHead'></image>
+      <span class="topClickHead">点击头像以修改</span>
+      <span class="topName">姓名：{{name}}</span>
+      <span class="topID">教工号：{{number}}</span>
+   </view>
+   <view class="mainView">
+      <span class="phone">手机号：{{phone}}</span>
+      <span class="ID">教工号：{{number}}</span>
+      <span class="name">姓名：{{name}}</span>
+      <span class="school">学校：{{school.name}}</span>
+      <button class="confirmButton" bindtap='Unbundled'>解绑</button>
+   </view>
+</page>

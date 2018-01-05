@@ -1,0 +1,51 @@
+<page>
+  <!--设置左上角的blueBoardIcon-->
+  <view class="blueUsersView">
+    <image src="../../images/blueBoard.png" class='blueUsersIcon' />
+    <strong>讨论课信息</strong>
+  </view>
+
+  <!--细线，hr不好设置css，用一个高度很小的view来代替-->
+  <view class="hrView">
+  </view>
+
+  <!--课堂信息，由一个icon和一行文字组成-->
+  <view class="courseInfoView">
+    <image src="../../images/teacher.png" class='courseInfoIcon' />
+    <strong>{{seminar.name}}</strong>
+  </view>
+  <view class="courseInfoView">
+    <image src="../../images/mail.png" class='courseInfoIcon' />
+    <strong>{{seminar.teacherEmail}}</strong>
+  </view>
+  <view class="courseInfoView">
+    <image src="../../images/date.png" class='courseInfoIcon' />
+    <strong>{{seminar.startTime}}</strong>
+  </view>
+  <view class="courseInfoView">
+    <image src="../../images/site.png" class='courseInfoIcon' />
+    <strong>{{seminar.site}}</strong>
+  </view>
+
+
+ 
+  <view class="successCall" wx:if="{{step==2}}">
+        <image src="../../images/clock.png" class='courseInfoIcon'/>
+        <strong>签到成功</strong>
+   </view>   
+
+
+ 
+  <view class="lateCall" wx:if="{{step==3}}">
+        <image src="../../images/clock.png" class='courseInfoIcon'/>
+        <strong>迟到签到成功</strong>
+   </view>   
+
+  <view wx:if="{{step==1}}">
+    <button type="button" class="blueBigBtn"   bindtap='Roll'>
+      签到
+    </button>
+  </view>
+
+
+</page>

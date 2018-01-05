@@ -1,0 +1,93 @@
+<page>
+  <!--设置左上角的usersIcon-->
+  <view class="blueUsersView">
+    <image src="../../images/users.png" class='blueUsersIcon' />
+    <strong>队伍信息</strong>
+  </view>
+  <!--细线，hr不好设置css，用一个高度很小的view来代替-->
+  <view class="hrView">
+  </view>
+  <view wx:if="{{fixed=='fixed'}}">
+  <!--固定分组不会分派迟到学生-->
+  <view wx:for="{{team}}" data-id="{{team[index].id}}" bindtap='member'>
+    <view class='studentListBarView' >
+      <span>队伍{{team[index].name}}</span>
+      <span class="groupTopics">选题:{{team[index].topics[0].name}}<view></view></span>
+    </view>
+    <view wx:if="{{LIST&&isFold}}">
+        <view class = 'studentView' wx:if="{{LIST.id==team[index].id}}">
+          <view class='studentBlock'>
+            <image src="../../images/user.png" class='userIcon' />
+            <span class="studentName">{{LIST.leader.name}}</span>
+          </view>
+          <view wx:for="{{LIST.members}}">
+            <view class='studentBlock'>
+              <image src="../../images/user.png" class='userIcon' />
+              <span class="studentName">{{LIST.members[index].name}}</span>
+            </view>
+          </view>
+        </view>
+    </view>
+  </view>
+  </view>
+
+<view wx:if="{{fixed=='random'}}">
+<!--随机分组需要分派迟到学生-->
+  <view wx:for="{{team}}" data-id="{{team[index].id}}" bindtap='member'>
+    <view class='studentListBarView'>
+      <span >队伍{{team[index].name}}</span>
+      <span class="groupTopics">选题:{{team[index].topics[0].name}}</span>
+    </view>
+    <view wx:if="{{LIST&&temp==team[index].id}}">
+        <view class = 'studentView' wx:if="{{LIST.id==team[index].id}}">
+          <view class='studentBlock'>
+            <image src="../../images/user.png" class='userIcon' />
+            <span class="studentName">{{LIST.leader.name}}</span>
+          </view>
+          <view wx:for="{{LIST.members}}">
+            <view class='studentBlock'>
+              <image src="../../images/user.png" class='userIcon' />
+              <span class="studentName">{{LIST.members[index].name}}</span>
+            </view>
+          </view>
+            <view class='studentBlock' wx:for="{{lateadd}}">
+              <image src="../../images/user.png" class='userIcon' />
+              <span class="studentName">{{lateadd[index].name}}</span>
+              <image src="../../images/redCross.png" class='redCancelIcon' catchtap="dele" data-name="{{lateadd[index].name}}" data-id="{{lateadd[index].id}}" data-index="{{index}}"></image>
+            </view>
+          <view  class='studentBlock' catchtap="showDialogBtn">
+          <image src='../../images/add.png' class='.addIcon'></image>
+          </view>
+        </view>
+    </view>
+  </view>
+ <view class='.studentNoCallBarView'>未签到学生</view>
+ <view wx:for="{{latestu}}">
+ <view class='studentView'>
+    <view class='studentBlock'>
+      <image src="../../images/user.png" class='userIcon' />
+      <span class="studentName">{{latestu[index].name}}</span>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--弹窗-->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="modal-title">学生添加</view>
+  <view class="modal-content">
+    <view wx:for="{{latestu}}" data-name="{{latestu[index].name}}" data-id="{{latestu[index].id}}" data-index="{{index}}" bindtap='add'>
+         <view class="modal-list" >
+               {{latestu[index].name}}
+               {{latestu[index].id}}
+          </view>
+    </view>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+  </view>
+</view>
+
+</page> 

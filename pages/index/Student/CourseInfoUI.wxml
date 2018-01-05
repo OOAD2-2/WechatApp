@@ -1,0 +1,26 @@
+<page class="body">
+
+  <!--上方蓝色块-->
+  <view class="head20">
+    <text class="FONT1">{{name}}</text>
+  </view>
+
+  <!--老师-->
+  <view class='infoView'>
+    <image class="imgView" src="../../images/teacher.png" />
+    <text class="textView">老师：{{teacher}}</text>
+  </view>
+
+  <!--老师邮箱-->
+  <view class='infoView'>
+    <image class="imgView" src="../../images/mail.png" />
+    <text class="textView">邮箱：{{email}}</text>
+  </view>
+
+  <!--课程简介-->
+  <view class='infoView'>
+    <image class="imgView" src="../../images/fileIcon.png" />
+    <text class="textView">简介：{{description}}</text>
+  </view>
+
+</page>

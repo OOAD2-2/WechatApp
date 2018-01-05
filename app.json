@@ -1,0 +1,33 @@
+{
+  "pages":[       
+
+    "pages/index/Common/ChooseCharacter", 
+    "pages/index/Common/BindingUI", 
+    "pages/index/Common/ChooseSchool", 
+    "pages/index/Common/CreateSchoolUI", 
+    "pages/index/logs/logs",
+    "pages/index/Teacher/FixedGroupInfo",
+    "pages/index/Teacher/FixedRollCallEndUI",
+    "pages/index/Teacher/FixedRollStartCallUI",
+    "pages/index/Teacher/Classmanage",
+    "pages/index/Teacher/TeacherMainUI",
+    "pages/index/Teacher/TeacherInfo",
+    "pages/index/Teacher/GroupInfoUI2",
+    "pages/index/Teacher/RollCallListUI",
+    "pages/index/Student/StudentMainUI",
+    "pages/index/Student/Seminar",
+    "pages/index/Student/Grade",
+    "pages/index/Student/StudentInfo",
+    "pages/index/Student/CourseUI",
+    "pages/index/Student/FGnoLeader",
+    "pages/index/Student/StudentRollCallUI",
+    "pages/index/Student/CourseInfoUI",
+    "pages/index/Student/ChooseTopic"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "课堂管理系统",
+    "navigationBarTextStyle":"white"
+  }
+}
