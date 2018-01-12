@@ -1,4 +1,5 @@
 // pages/index/CourseUI.js
+var util = require('../../../utils/util.js');
 Page({
 
   /**
@@ -7,7 +8,8 @@ Page({
   data: {
   courseId:"",
   seminar:[],
-  date:"2017-10-15"
+  date:"",
+  userId:"3"
   },
 
   /**
@@ -15,20 +17,26 @@ Page({
    */
   onLoad: function (option) {
     var that=this;
+    var time = util.formatTime(new Date());
+    // 再通过setData更改Page()里面的data，动态更新页面的数据  
+    this.setData({
+      date: time
+    });  
     that.setData(
       {
         courseId: option.courseId,
-        courseName: option.courseName
-      }
+        courseName: option.courseName,
+        userId: option.userId
+      },
     ),
     wx.request({
-      url: getApp().globalData.url + '/' + that.data.courseId +'/student/seminar',
+      url: getApp().globalData.url + '/course/' + that.data.courseId+'/seminar',
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       data:
       {
-        embedGrade:"true"
+        userId:that.data.userId
       },
       method: "GET",
       success: function (res) {

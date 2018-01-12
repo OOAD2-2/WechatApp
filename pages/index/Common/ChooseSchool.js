@@ -27,7 +27,7 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/school/province',
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "GET",
       success: function (res) {
@@ -105,7 +105,7 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/school/city?province=' + name,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "GET",
       success: function (res) {
@@ -129,7 +129,7 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/school?' + city,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       data:
       {

@@ -20,7 +20,7 @@ Page({
       wx.request({
         url: getApp().globalData.url + '/me?id='+ that.data.id,
         header: {//请求头
-          "Content-Type": "applciation/json"
+          "Authorization": "Bearer " + getApp().globalData.jwt
         },
         method: "GET",
         success: function (res) {
@@ -34,7 +34,8 @@ Page({
       wx.request({
         url: getApp().globalData.url + '/course?userId=' + that.data.id,
         header: {//请求头
-          "Content-Type": "applciation/json"
+          "Authorization": "Bearer " + getApp().globalData.jwt
+         // "Content-Type": "applciation/json"
         },
         method: "GET",
         success: function (res) {

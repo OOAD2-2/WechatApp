@@ -21,7 +21,7 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/seminar/' + that.data.seminarId+"/topic",
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "GET",
       success: function (res) {
@@ -62,11 +62,13 @@ Page({
       title: '提示',
       content: '确定选择此话题吗（一旦选定不能修改）',
       success: function (res) {
+        console.log(that.data.topic[e.currentTarget.dataset.id].id)
         if (res.confirm) {
           wx.request({
-            url: getApp().globalData.url + '/group/' + that.data.groupId + "/topic",
+            url: getApp().globalData.url + '/group/' + that.data.groupId + "/topic?&topicId=" + that.data.topic[e.currentTarget.dataset.id].id,
             header: {//请求头
-              "Content-Type": "application/x-www-form-urlencoded"
+             // "Content-Type": "application/x-www-form-urlencoded"
+              "Authorization": "Bearer " + getApp().globalData.jwt
             },
             method: "POST",
             success: function (res) {

@@ -15,6 +15,8 @@
   
   <input class="inputSchool" value="{{School.name}}"disabled='false'/>
   <image class='.selectSchoolIcon' src="../../images/ninedot.png" bindtap='ChooseSchool'/>
+  <text class='phone' >电话:</text><input class='.inputPhone' bindinput ="phoneInput" value="{{phone}}" required="true"/>
+  <text class='password' >密码:</text><input class='.inputPassword' bindinput ="passwordInput" value="{{password}}" required="true"/>
   
   <button class='confirmButton' bindtap='bind'>绑定</button>
 	</view>

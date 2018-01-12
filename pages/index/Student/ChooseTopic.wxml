@@ -14,13 +14,13 @@
   <span wx:for="{{topic}}">
   
     <view class="blueTopicView" wx:if="{{topic[index].groupLeft>0}}" data-id="{{index}}" >
-    <view bindtap="choose">
+    <view bindtap="choose" data-id="{{index}}">
       <span class="topic" >话题{{topic[index].serial}}</span>
       <view class="hrVertical"> </view>
       <span class="topicName">{{topic[index].name}}</span>
       <!--剩余选题数量大于等于2时-->
-      <span class="leftNumWhite" wx:if="{{topic[index].groupLeft>=2}}">剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupLimit}}</span>
-      <span class="leftNumRed" wx:else>剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupLimit}}</span>
+      <span class="leftNumWhite" wx:if="{{topic[index].groupLeft>=2}}">剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupNumberLimit}}</span>
+      <span class="leftNumRed" wx:else>剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupNumberLimit}}</span>
       </view>
       <image src='../../images/ninepot.png' class="nineIcon" data-id="{{index}}" bindtap='getDes'></image>
     </view>
@@ -30,7 +30,7 @@
       <view class="hrVertical"> </view>
       <span class="topicName">{{topic[index].name}}</span>
       <!--剩余选题数量大于等于2时-->
-      <span class="leftNumWhite" >剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupLimit}}</span>
+      <span class="leftNumWhite" >剩余 ： {{topic[index].groupLeft}}/{{topic[index].groupNumberLimit}}</span>
       <image src='../../images/ninepot.png' class="nineIcon" data-id="{{index}}" bindtap='getDes'></image>
     </view>
     

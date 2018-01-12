@@ -26,7 +26,7 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/course/'+that.data.courseId,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "GET",
       success: function (res) {

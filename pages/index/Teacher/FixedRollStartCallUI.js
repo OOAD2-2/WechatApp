@@ -11,7 +11,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    console.log(options.data);
     that.setData({
       classId: options.classId,
       seminarId: options.seminarId,
@@ -22,7 +21,7 @@ Page({
       wx.request({
       url: getApp().globalData.url + '/seminar/' + options.seminarId + '/class/' + that.data.classId + '/attendance',
         header: {//请求头
-          "Content-Type": "applciation/json"
+          "Authorization": "Bearer " + getApp().globalData.jwt
         },
         data:{
           userId:wx.getStorageSync("user").id
@@ -76,26 +75,35 @@ Page({
   },
   start: function () {
     var that = this;
-    wx.request({
-      url: getApp().globalData.url + '/class/' + that.data.classId,
-      header: {//请求头
-        "Content-Type": "applciation/json"
-      },
-      data: { "calling": that.data.classId },
-      method: "PUT",
-    })
-    that.setData({
-      step:2
-    })
+    //wx.getLocation({
+    //  type: 'wgs84',
+    //  success: function (res) {
+    //    that.setData({
+    //      latitude: res.latitude,
+    //      longitude: res.longitude
+    //    })
+        wx.request({
+          url: getApp().globalData.url + '/class/' + that.data.classId + '?seminarId=' + that.data.seminarId + '&calling=' + that.data.classId,
+          header: {//请求头
+            "Authorization": "Bearer " + getApp().globalData.jwt
+          },
+          method: "PUT",
+        })
+        that.setData({
+          step: 2
+        })
+   //   }
+   // })  
+    
   },
   end: function () {
     var that = this;
     wx.request({
-      url: getApp().globalData.url + '/class/' + that.data.classId,
+      url: getApp().globalData.url + '/class/' + that.data.classId
+      + '?seminarId=' + that.data.seminarId + '&calling=-1',
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
-      data: { "calling": -1 },
       method: "PUT",
     })
     that.setData({

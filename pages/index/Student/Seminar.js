@@ -7,7 +7,7 @@ Page({
   data: {
   seminarId:"",
   seminar:[],
-  date: "2017-10-15"
+  classId:""
   },
 
   /**
@@ -15,15 +15,16 @@ Page({
    */
   onLoad: function (options) {
   var that=this;
+  var classId = wx.getStorageSync("classId");
   this.setData(
     {
       seminarId:options.seminarId,
     }
   ),
   wx.request({
-    url: getApp().globalData.url + '/seminar/'+that.data.seminarId+"/my",
+    url: getApp().globalData.url + '/seminar/'+that.data.seminarId+"/my?classId="+classId,
     header: {//请求头
-      "Content-Type": "applciation/json"
+      "Authorization": "Bearer " + getApp().globalData.jwt
     },
     method: "GET",
     success: function (res) {
@@ -105,7 +106,7 @@ Page({
     var that=this;
     wx.navigateTo({
       //if(class = "bax3")
-      url: 'FGnoLeader?seminarId='+that.data.seminarId,
+      url: 'FGnoLeader?seminarId=' + that.data.seminarId + "&seminarName=" + that.data.seminar.name + "&fixed=" +that.data.seminar.groupingMethod,
       success: function (res) {
         // success
       },

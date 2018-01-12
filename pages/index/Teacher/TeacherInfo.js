@@ -29,7 +29,7 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/me?id=' + options.id,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "GET",
       success: function (res) {
@@ -110,13 +110,23 @@ Page({
   },
   Unbundled:function(){
     console.log("解绑");
-    wx.navigateBack({
+    wx.request({
+      url: getApp().globalData.url + '/me?typeId=-1',
+      header: {//请求头
+        "Authorization": "Bearer " + getApp().globalData.jwt
+      },
+      method: "PUT",
+      success: function (res) {
+        wx.navigateBack({
+        })
+        wx.reLaunch({
+          url: '../Common/ChooseCharacter',
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+      }
     })
-    wx.reLaunch({
-      url: '../Common/ChooseCharacter',
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+   
   }
 })

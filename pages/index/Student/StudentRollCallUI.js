@@ -6,9 +6,11 @@ Page({
    */
   data: {
   seminarId:"",
-  step:"1",
+  status:"",
   classId:"",
-  studentId:""
+  studentId:"",
+  longitude:"",
+  latitude:""
   },
 
   /**
@@ -17,11 +19,11 @@ Page({
   onLoad: function (options) {
   var that=this;
   wx.getStorage({
-    key: 'studentId',
+    key: 'user',
     success: function (res) {
       that.setData(
         {
-          studentId: res.data
+          studentId: res.data.id
         }
       )
     },
@@ -33,7 +35,22 @@ Page({
           {
             classId: res.data
           }
-        )
+        ),
+          wx.request({
+            url: getApp().globalData.url + '/seminar/' + that.data.seminarId + '/class/' + that.data.classId + '/attendance/' + that.data.studentId,
+            header: {//请求头
+              "Authorization": "Bearer " + getApp().globalData.jwt
+            },
+            method: "GET",
+            success: function (res) {
+              that.setData(
+                {
+                  status: res.data.status
+                }
+              ),
+                console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+            }
+          })
       },
     }),
   this.setData(
@@ -44,7 +61,7 @@ Page({
   wx.request({
     url: getApp().globalData.url + '/seminar/' + that.data.seminarId+'/detail',
     header: {//请求头
-      "Content-Type": "applciation/json"
+      "Authorization": "Bearer " + getApp().globalData.jwt
     },
     method: "GET",
     success: function (res) {
@@ -107,25 +124,29 @@ Page({
   Roll:function()
   {
     var that=this;
-    wx.request({
-      url: getApp().globalData.url + '/class/' + that.data.classId + '/attendance/' + that.data.studentId,
-      header: {//请求头
-        "Content-Type": "applciation/json"
-      },
-      data:
-      {
-        "longitude": 118.1132721,
-        "latitude": 24.4307197,
-        "elevation": 18.42
-      },
-      method: "PUT",
+    wx.getLocation({
       success: function (res) {
-        that.setData(
-          {
-            step:"3"
+        console.log(res)
+        that.setData({
+            longitude: res.longitude,
+            latitude: res.latitude
+        }),
+        wx.request({
+          url: getApp().globalData.url + '/seminar/' + that.data.seminarId + '/class/' + that.data.classId + '/attendance/' + that.data.studentId + '?latitude='+that.data.latitude+
+          '&longitude='+that.data.longitude+"&elevation=18.42",
+          header: {//请求头
+            "Authorization": "Bearer " + getApp().globalData.jwt
+          },
+          method: "PUT",
+          success: function (res) {
+            that.setData(
+              {
+                status: res.data.status
+              }
+            ),
+              console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
           }
-        ),
-        console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+        })
       }
     })
   }

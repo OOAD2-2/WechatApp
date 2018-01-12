@@ -13,33 +13,39 @@ Page({
    */
   onLoad: function (options) {
   var that=this;
+  that.setData(
+    {
+      name: options.seminarName,
+      fixed:options.fixed
+    }
+  )
   wx.getStorage({
-    key: 'studentId',
+    key: 'user',
     success: function (res) {
       that.setData(
         {
-          studentId: res.data
-        }
+          userId: res.data.id
+        },
+        wx.request({
+          url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group/my?userId=" + res.data.id,
+          header: {//请求头
+            "Authorization": "Bearer " + getApp().globalData.jwt
+          },
+          method: "GET",
+          success: function (res) {
+            console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+            that.setData({
+              group: res.data
+            })
+          }
+        })
       )
     },})
   that.setData(
     {
       seminarId:options.seminarId
     }
-  ),
-  wx.request({
-    url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group/my",
-    header: {//请求头
-      "Content-Type": "applciation/json"
-    },
-    method: "GET",
-    success: function (res) {
-      console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-      that.setData({
-        group: res.data
-      })
-    }
-  })
+  )
   },
 
   /**
@@ -81,12 +87,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.setData(
-      {
-        studentId:8888
-      }
-    )
-  
   },
 
   /**
@@ -99,9 +99,9 @@ Page({
   {
     var that=this;
     wx.request({
-      url: getApp().globalData.url + '/group/' + that.data.group.id + "/assign",
+      url: getApp().globalData.url + '/group/' + that.data.group.id + "/assign?userId=" + that.data.userId,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       data:{
         id:that.data.studentId
@@ -109,8 +109,18 @@ Page({
       method: "PUT",
       success: function (res) {
         console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-        that.setData({
-          leader:1
+        wx.request({
+          url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group/my?userId=" + that.data.userId,
+          header: {//请求头
+            "Authorization": "Bearer " + getApp().globalData.jwt
+          },
+          method: "GET",
+          success: function (res) {
+            console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+            that.setData({
+              group: res.data
+            })
+          }
         })
       }
     })
@@ -118,18 +128,25 @@ Page({
    resign: function () {
     var that = this;
     wx.request({
-      url: getApp().globalData.url + '/group/' + that.data.group.id + "/resign",
+      url: getApp().globalData.url + '/group/' + that.data.group.id + "/resign?userId="+that.data.userId,
       header: {//请求头
-        "Content-Type": "applciation/json"
-      },
-      data: {
-        id: that.data.studentId
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "PUT",
       success: function (res) {
         console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-        that.setData({
-          leader:0
+        wx.request({
+          url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group/my?userId=" + that.data.userId,
+          header: {//请求头
+            "Authorization": "Bearer " + getApp().globalData.jwt
+          },
+          method: "GET",
+          success: function (res) {
+            console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+            that.setData({
+              group: res.data
+            })
+          }
         })
       }
     })

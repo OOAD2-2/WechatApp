@@ -1,7 +1,8 @@
 {
   "pages":[       
-
     "pages/index/Common/ChooseCharacter", 
+    "pages/index/Teacher/TeacherMainUI",
+    "pages/index/Student/StudentMainUI",
     "pages/index/Common/BindingUI", 
     "pages/index/Common/ChooseSchool", 
     "pages/index/Common/CreateSchoolUI", 
@@ -10,11 +11,9 @@
     "pages/index/Teacher/FixedRollCallEndUI",
     "pages/index/Teacher/FixedRollStartCallUI",
     "pages/index/Teacher/Classmanage",
-    "pages/index/Teacher/TeacherMainUI",
     "pages/index/Teacher/TeacherInfo",
     "pages/index/Teacher/GroupInfoUI2",
     "pages/index/Teacher/RollCallListUI",
-    "pages/index/Student/StudentMainUI",
     "pages/index/Student/Seminar",
     "pages/index/Student/Grade",
     "pages/index/Student/StudentInfo",

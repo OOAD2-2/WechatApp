@@ -54,7 +54,7 @@
   position:absolute;
   font-size: 40rpx;
   left:20%;
-  top:40%;
+  top:31%;
   z-index: 2;
 }
 /*姓名的标签*/
@@ -63,7 +63,7 @@
   position:absolute;
   font-size: 40rpx;
   left:20%;
-  top:52%;
+  top:46%;
   z-index: 2;
 }
 /*学校的标签*/
@@ -72,7 +72,23 @@
   position:absolute;
   font-size: 40rpx;
   left:20%;
-  top:62%;
+  top:56%;
+  z-index: 2;
+}
+.phone
+{
+  position:absolute;
+  font-size: 40rpx;
+  left:20%;
+  top:66%;
+  z-index: 2;
+}
+.password
+{
+  position:absolute;
+  font-size: 40rpx;
+  left:20%;
+  top:76%;
   z-index: 2;
 }
 /*教工号/学号输入框*/
@@ -84,7 +100,7 @@
   height: 90rpx;
   font-size:40rpx;
   left:39%;
-  top:38%;
+  top:30%;
   z-index:2;
   border-radius: 20rpx;
 }
@@ -97,7 +113,7 @@
   height: 90rpx;
   font-size:40rpx;
   left:39%;
-  top:52%;
+  top:45%;
   z-index:2;
   border-radius: 20rpx;
 }
@@ -110,7 +126,31 @@
   height: 90rpx;
   font-size:40rpx;
   left:39%;
-  top:62%;
+  top:55%;
+  z-index:2;
+  border-radius: 20rpx;
+}
+.inputPhone
+{
+  position:absolute;
+  background: #fff;
+  width: 300rpx;
+  height: 90rpx;
+  font-size:40rpx;
+  left:39%;
+  top:65%;
+  z-index:2;
+  border-radius: 20rpx;
+}
+.inputPassword
+{
+  position:absolute;
+  background: #fff;
+  width: 300rpx;
+  height: 90rpx;
+  font-size:40rpx;
+  left:39%;
+  top:75%;
   z-index:2;
   border-radius: 20rpx;
 }
@@ -120,7 +160,7 @@
   width:280rpx;
   height:120rpx;
   font-size: 50rpx;
-  top:62%;
+  top:72%;
 }
 /*提示图标*/
 .tipIcon
@@ -129,7 +169,7 @@
   width: 5%;
   height: 3%;
   left: 40%;
-  top:47%;
+  top:40%;
   z-index: 2;
 }
 /*提示文字自体*/
@@ -139,7 +179,7 @@
   font-size: 28rpx;
   color: red;
   left: 48%;
-  top:47%;
+  top:40%;
   z-index: 2;
 }
 /*选择学校按钮*/
@@ -150,6 +190,6 @@
   width: 90rpx;
   height: 90rpx;
   left:64%;
-  top:62%;
+  top:55%;
   z-index:2;
 }

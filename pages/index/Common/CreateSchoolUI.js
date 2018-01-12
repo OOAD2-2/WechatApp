@@ -83,7 +83,8 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/school',
       header: {//请求头
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       data:
       {

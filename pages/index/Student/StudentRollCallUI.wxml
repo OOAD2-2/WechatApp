@@ -12,7 +12,7 @@
   <!--课堂信息，由一个icon和一行文字组成-->
   <view class="courseInfoView">
     <image src="../../images/teacher.png" class='courseInfoIcon' />
-    <strong>{{seminar.name}}</strong>
+    <strong>{{seminar.teacherName}}</strong>
   </view>
   <view class="courseInfoView">
     <image src="../../images/mail.png" class='courseInfoIcon' />
@@ -29,19 +29,19 @@
 
 
  
-  <view class="successCall" wx:if="{{step==2}}">
+  <view class="successCall" wx:if="{{status=='ontime'}}">
         <image src="../../images/clock.png" class='courseInfoIcon'/>
         <strong>签到成功</strong>
    </view>   
 
 
  
-  <view class="lateCall" wx:if="{{step==3}}">
+  <view class="lateCall" wx:if="{{status=='late'}}">
         <image src="../../images/clock.png" class='courseInfoIcon'/>
         <strong>迟到签到成功</strong>
    </view>   
 
-  <view wx:if="{{step==1}}">
+  <view wx:if="{{status==''}}">
     <button type="button" class="blueBigBtn"   bindtap='Roll'>
       签到
     </button>

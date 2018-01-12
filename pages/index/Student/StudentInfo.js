@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  usernumber:""
+  userId:""
   },
 
   /**
@@ -14,14 +14,17 @@ Page({
   onLoad: function (option) {
     var that = this;
     this.setData({
-      usernumber: option.usernumber
+      userId: option.userId
     }
     );
     wx.request({
       url: getApp().globalData.url+'/me',
       header: {
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
+     data:{
+       id:that.data.userId
+     } ,
       method: "GET",
       success: function (res) {
         console.log(res.data);
@@ -98,7 +101,8 @@ Page({
         wx.request({
           url: getApp().globalData.url + '/upload/avatar',
           header: {
-            "content-type": 　"application/x-www-form-urlencoded"
+            "Authorization": "Bearer " + getApp().globalData.jwt
+           // "content-type": 　"application/x-www-form-urlencoded"
           },
           data: {
             FilePaths: tempFilePaths
@@ -116,7 +120,7 @@ Page({
           wx.request({
             url: getApp().globalData.url + '/me',
             header: {
-              "Content-Type": "applciation/json"
+              "Authorization": "Bearer " + getApp().globalData.jwt
             },
             data:{
               FilePaths: tempFilePaths
@@ -130,26 +134,25 @@ Page({
       }
     })
   },
-  unBind: function () {
+  Unbundled: function () {
+    console.log("解绑");
     wx.request({
-      url: getApp().globalData.url + '/me',
-      header: {
-        "Content-Type": "applciation/json"
-      },
-      data:
-      {
-        unionID:""
+      url: getApp().globalData.url + '/me?typeId=-1&openid=' + getApp().globalData.openid,
+      header: {//请求头
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "PUT",
       success: function (res) {
-        console.log(res.data);
+        wx.navigateBack({
+        })
+        wx.reLaunch({
+          url: '../Common/ChooseCharacter',
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
       }
-    }),
-      wx.reLaunch({
-        url: '../Common/ChooseCharacter',
-        success: function (res) { },
-        fail: function (res) { },
-        complete: function (res) { },
-      })
+    })
+
   }
 })

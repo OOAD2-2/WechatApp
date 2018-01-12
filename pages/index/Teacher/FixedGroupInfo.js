@@ -10,70 +10,10 @@ Page({
     fixed:0,
     isFold: false,
     showModal: false,
-    lateadd: [
-      {
-        "id": 5324,
-        "name": "李1"
-      },
-      {
-        "id": 5678,
-        "name": "王2"
-      }
-    ],
-    latestu: [{
-      "id": 5324,
-      "name": "李3"
-    },
-    {
-      "id": 5678,
-      "name": "王4"
-    }],
-    team: [
-      {
-        "id": 28,
-        "name": "1A1",
-        "topics": [
-          {
-            "id": 257,
-            "name": "领域模型与模块"
-          }
-        ]
-      },
-      {
-        "id": 29,
-        "name": "1A2",
-        "topics": [
-          {
-            "id": 257,
-            "name": "领域模型与模块"
-          }
-        ]
-      }
-    ],
-    LIST: {
-      "id": 28,
-      "name": "1A1",
-      "leader": {
-        "id": 8888,
-        "name": "张三"
-      },
-      "members": [
-        {
-          "id": 5324,
-          "name": "李四"
-        },
-        {
-          "id": 5678,
-          "name": "王五"
-        }
-      ],
-      "topics": [
-        {
-          "id": 257,
-          "name": "领域模型与模块"
-        }
-      ],
-      "report": ""}
+    lateadd: [    ],
+    latestu: [],
+    team: [    ],
+    LIST: {}
   },
 
   /**
@@ -90,12 +30,12 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/seminar/' + that.data.seminarId +'/group?classId='+that.data.classId,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       data:{userId:wx.getStorageSync("user").id},
       method: "GET",
       success: function (res) {
-        console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+        console.log(res.data);
         that.setData({
         team:res.data
         })
@@ -104,7 +44,7 @@ Page({
     wx.request({
       url: getApp().globalData.url + '/seminar/' + that.data.seminarId + '/class/' + that.data.classId+'/attendance/late',
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       data:{userId:wx.getStorageSync("user").id},
       method: "GET",
@@ -134,14 +74,15 @@ Page({
 
   member: function (e) {
     var that = this;
-    var id = e.currentTarget.dataset.id;
-    if (that.data.temp != id)
-      that.setData({ temp: e.currentTarget.dataset.id })
+    var teamid = e.currentTarget.dataset.teamid;
+    that.setData({ currentTeam: e.currentTarget.dataset.teamid })
+    if (that.data.temp != teamid)
+      that.setData({ temp: e.currentTarget.dataset.teamid })
     else that.setData({ temp: -1 })
     wx.request({
-      url: getApp().globalData.url + '/group/' + e.currentTarget.dataset.id,
+      url: getApp().globalData.url + '/group/' + e.currentTarget.dataset.teamid,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "GET",
       success: function (res) {
@@ -157,15 +98,15 @@ Page({
     var name=e.currentTarget.dataset.name;
     var id = e.currentTarget.dataset.id;
     var index = e.currentTarget.dataset.index;
-    var team = that.data.team;
-    var arr={name,id};
+    var teamid = that.data.currentTeam;
+    var arr={name,id,teamid};
     var lateadd = that.data.lateadd;
     var latestu = that.data.latestu;
     lateadd.push(arr);
     wx.request({
-      url: getApp().globalData.url + '/group/' + team[index].id + '/add?id='+ id,
+      url: getApp().globalData.url + '/group/' + teamid + '/add?id='+ id,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "PUT",
       success: function (res) {
@@ -184,14 +125,15 @@ Page({
     var name = e.currentTarget.dataset.name;
     var id = e.currentTarget.dataset.id;
     var index = e.target.dataset.index;
-    var arr = { name, id };
+    var teamid = that.data.currentTeam;
+    var arr = { name, id, teamid };
     var lateadd = that.data.lateadd;
     var latestu = that.data.latestu;
     lateadd.splice(index, 1);
     wx.request({
-      url: getApp().globalData.url + '/group/' + team[index].id + '/remove?id=' + id,
+      url: getApp().globalData.url + '/group/' + teamid + '/remove?id=' + id,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "PUT",
       success: function (res) {
@@ -207,8 +149,9 @@ Page({
   /**
      * 弹窗
      */
-  showDialogBtn: function () {
+  showDialogBtn: function (e) {
     this.setData({
+      currentTeam: e.currentTarget.dataset.teamid,
       showModal: true
     })
   },
@@ -233,9 +176,18 @@ Page({
     var lateadd = that.data.lateadd;
     var latestu = that.data.latestu;
     var cancleList = that.data.cancleList;
-    console.log(cancleList);
     for (var i = 0; i < cancleList; i++){
-      latestu.push(lateadd.pop());
+      var item = lateadd.pop();
+      console.log(item);
+      wx.request({
+        url: getApp().globalData.url + '/group/' + item.teamid + '/remove?id=' + item.id,
+        header: {//请求头
+          "Authorization": "Bearer " + getApp().globalData.jwt
+        },
+        method: "PUT",
+        success: function (res) {
+        }
+      })
     }
     that.setData({
       lateadd: lateadd,

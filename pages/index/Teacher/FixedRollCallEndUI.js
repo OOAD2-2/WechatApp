@@ -25,7 +25,7 @@ Page({
       url: getApp().globalData.url +'/seminar/'+that.data.seminarId+ '/class/' + that.data.classId +'/attendance/present',
       //?showPresent=true&showLate=true&showAbsent=true
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
       method: "GET",
       data:{userId:wx.getStorageSync("user").id},
@@ -39,7 +39,7 @@ Page({
       wx.request({
         url: getApp().globalData.url + '/seminar/' + that.data.seminarId + '/class/' + that.data.classId + '/attendance/late',
         header: {//请求头
-          "Content-Type": "applciation/json"
+          "Authorization": "Bearer " + getApp().globalData.jwt
         },
         data:{userId:wx.getStorageSync("user").id},
         method: "GET",

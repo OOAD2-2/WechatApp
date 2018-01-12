@@ -8,9 +8,8 @@ Page({
   stars:[1,2,3,4,5],
   empty_star:"../../images/heart_empty.png",
   full_satr:"../../images/heart_chosen.png",
-  point:[0,0,0,0,0,0],
+  point:[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   group:[{name:1},{name:2},{name:3}],
-  grade:[0,0],
   groupId:"",
   step:"1"
   },
@@ -27,42 +26,41 @@ Page({
     }
   ),
     wx.getStorage({
-      key: 'studentId',
+      key: 'user',
       success: function (res) {
         that.setData(
           {
-            studentId: res.data
-          }
+            studentId: res.data.id
+          },
+          wx.getStorage({
+            key: 'classId',
+            success: function (res) {
+              that.setData(
+                {
+                  classId: res.data
+                }
+              ),
+                wx.request({
+                  url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group?&classId=" + that.data.classId + "&userId=" + that.data.studentId,
+                  header: {//请求头
+                    "Authorization": "Bearer " + getApp().globalData.jwt
+                  },
+                  data:
+                  {
+                    gradeable: true,
+                  },
+                  method: "GET",
+                  success: function (res) {
+                    console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+                    that.setData({
+                      group: res.data
+                    })
+                  }
+                })
+            },
+          })
         )
       },
-    }),
-    wx.getStorage({
-      key: 'classId',
-      success: function (res) {
-        that.setData(
-          {
-            classId: res.data
-          }
-        )
-      },
-    }),
-    wx.request({
-      url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group",
-      header: {//请求头
-        "Content-Type": "applciation/json"
-      },
-      data:
-      {
-        gradeable:true,
-        classId:that.data.classId
-      },
-      method: "GET",
-      success: function (res) {
-        console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-        that.setData({
-          group: res.data
-        })
-      }
     })
   },
 
@@ -122,6 +120,7 @@ Page({
     var Group = e.currentTarget.dataset.group;
     var point= that.data.point;
     point[Group]=Grade;
+    console.log(Group + "组得" + Grade + "分")
     this.setData({
       point: point
     })
@@ -135,20 +134,17 @@ Page({
         step:"2"
       }
     )
-    wx.request({
-      url: getApp().globalData.url + '/group/' + that.data.group[1].id + '/grade/presentation/' + that.data.studentId,
-      header: {//请求头
-        "Content-Type": "applciation/json"
-      },
-      data:
-      {
-        topicId:257,
-        grade: 4
-      },
-      method: "PUT",
-      success: function (res) {
-        console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-      }
-    })
+    for (var index in that.data.group) {
+      wx.request({
+        url: getApp().globalData.url + '/group/' + that.data.group[index].id + '/grade/presentation/'+that.data.studentId+"?topicId="+that.data.group[index].topicId+"&grade="+that.data.point[index],
+        header: {//请求头
+          "Authorization": "Bearer " + getApp().globalData.jwt
+        },
+        method: "PUT",
+        success: function (res) {
+          console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+        }
+      })
+    } 
   }
 })

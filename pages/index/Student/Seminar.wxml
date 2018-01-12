@@ -3,15 +3,15 @@
 	<span class="title">{{seminar.courseName}}</span>
 		<span class="titleSmall"> {{seminar.name}}</span>
 	</view>
-	<view class="ScoreBoxGrey" wx:if="{{date<seminar.startTime}}">
+	<view class="ScoreBoxBlue" wx:if="{{seminar.classCalling==2}}" bindtap="Grade">
     <span class="ButtonTextRight" >打分</span></view>
-    <view class="ScoreBoxBlue" wx:else bindtap="Grade">
+    <view class="ScoreBoxGrey" wx:else >
     <span class="ButtonTextRight" >打分</span></view>
     
-  <view class="CallBoxGrey" wx:if="{{date<seminar.startTime}}">
+  <view class="CallBoxBlue" wx:if="{{seminar.classCalling==1}}" bindtap="getRoll">
     <span class="ButtonTextLeft">签到</span>
   </view>
-  <view class="CallBoxBlue" wx:else bindtap="getRoll">
+  <view class="CallBoxGrey" wx:else >
     <span class="ButtonTextLeft" >签到</span>
   </view>
   

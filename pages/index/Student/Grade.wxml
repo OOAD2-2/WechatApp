@@ -7,7 +7,7 @@
 
 <block>
   <view wx:for="{{group}}" wx:for-index="groupindex" >
-    <label class='text'>{{group[groupindex].name}}</label>
+    <label class='text'>{{group[groupindex].id+'-'+group[groupindex].topicId}}</label>
     <block wx:for="{{stars}}">
   <image class="heart" wx:if="{{step==1}}" src="{{point[groupindex] >= item ? full_satr : empty_star}}" data-Grade="{{item}}" data-Group="{{groupindex}}"  bindtap="setGrade"/>
   <image wx:else class="heart"  src="{{point[groupindex] >= item ? full_satr : empty_star}}" data-Grade="{{item}}" data-Group="{{groupindex}}" />

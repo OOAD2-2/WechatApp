@@ -7,19 +7,29 @@
   <!--细线，hr不好设置css，用一个高度很小的view来代替-->
   <view class="hrView">
   </view>
+
   <view wx:if="{{fixed=='fixed'}}">
   <!--固定分组不会分派迟到学生-->
-  <view wx:for="{{team}}" data-id="{{team[index].id}}" bindtap='member'>
+  <view wx:for="{{team}}" data-teamid="{{team[index].id}}" bindtap='member'>
     <view class='studentListBarView' >
       <span>队伍{{team[index].name}}</span>
-      <span class="groupTopics">选题:{{team[index].topics[0].name}}<view></view></span>
+      <span class="groupTopics">选题:
+      <span wx:for="{{team[index].seminarTopicVOList}}">
+       <span wx:if="{{index>0}}">
+       & {{team[index].seminarTopicVOList[0].name}}</span> 
+       <span wx:else>
+       {{team[index].seminarTopicVOList[0].name}}</span> 
+      </span>      
+      </span>
     </view>
-    <view wx:if="{{LIST&&isFold}}">
+    <view wx:if="{{LIST&&temp==team[index].id}}">
         <view class = 'studentView' wx:if="{{LIST.id==team[index].id}}">
+        <!--
           <view class='studentBlock'>
             <image src="../../images/user.png" class='userIcon' />
             <span class="studentName">{{LIST.leader.name}}</span>
           </view>
+          -->
           <view wx:for="{{LIST.members}}">
             <view class='studentBlock'>
               <image src="../../images/user.png" class='userIcon' />
@@ -33,34 +43,48 @@
 
 <view wx:if="{{fixed=='random'}}">
 <!--随机分组需要分派迟到学生-->
-  <view wx:for="{{team}}" data-id="{{team[index].id}}" bindtap='member'>
+  <view wx:for="{{team}}" data-teamid="{{team[index].id}}" bindtap='member'>
     <view class='studentListBarView'>
       <span >队伍{{team[index].name}}</span>
-      <span class="groupTopics">选题:{{team[index].topics[0].name}}</span>
+      <span class="groupTopics">选题:
+      <span wx:for="{{team[index].seminarTopicVOList}}">
+       <span wx:if="{{index>0}}">
+       & {{team[index].seminarTopicVOList[0].name}}</span> 
+       <span wx:else>
+       {{team[index].seminarTopicVOList[0].name}}</span> 
+      </span>      
+      </span>
     </view>
     <view wx:if="{{LIST&&temp==team[index].id}}">
         <view class = 'studentView' wx:if="{{LIST.id==team[index].id}}">
+        <!--
           <view class='studentBlock'>
             <image src="../../images/user.png" class='userIcon' />
             <span class="studentName">{{LIST.leader.name}}</span>
           </view>
+        -->
           <view wx:for="{{LIST.members}}">
             <view class='studentBlock'>
               <image src="../../images/user.png" class='userIcon' />
               <span class="studentName">{{LIST.members[index].name}}</span>
             </view>
           </view>
-            <view class='studentBlock' wx:for="{{lateadd}}">
+
+          <!--添加的迟到学生-->
+            <view class='studentBlock' wx:for="{{lateadd}}"  wx:if="{{lateadd[index].teamid==currentTeam}}">
               <image src="../../images/user.png" class='userIcon' />
               <span class="studentName">{{lateadd[index].name}}</span>
               <image src="../../images/redCross.png" class='redCancelIcon' catchtap="dele" data-name="{{lateadd[index].name}}" data-id="{{lateadd[index].id}}" data-index="{{index}}"></image>
             </view>
-          <view  class='studentBlock' catchtap="showDialogBtn">
+
+          <!--加号-->
+          <view  class='studentBlock' catchtap="showDialogBtn" data-teamid="{{team[index].id}}">
           <image src='../../images/add.png' class='.addIcon'></image>
           </view>
         </view>
     </view>
   </view>
+
  <view class='.studentNoCallBarView'>未签到学生</view>
  <view wx:for="{{latestu}}">
  <view class='studentView'>

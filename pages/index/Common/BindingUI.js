@@ -7,12 +7,14 @@ Page({
   data: {
   Number:"",
   name:"",
+  phone:"",
+  password:"",
   School:{"id":"","name":""},
   typeId:""
   },
   /**   * 生命周期函数--监听页面加载   */
   onLoad: function (options) {
-    console.log(options);
+  console.log(options);
   var that=this;
   that.setData(
     {
@@ -23,35 +25,31 @@ Page({
       }
     }
   )
-  
   wx.getStorage({
     key: 'number',
     success: function (res) {
-      that.setData(
-        {
-          Number: res.data
-        }
-      )
+      that.setData({ Number: res.data })
     },
   })
   wx.getStorage({
     key: 'name',
     success: function (res) {
-      that.setData(
-        {
-          name: res.data
-        }
-      )
+      that.setData({ name: res.data })
     },
-  }),
-  wx.setStorage({
-    key: 'number',
-    data:" ",
   })
-  wx.setStorage({
-    key: 'name',
-    data:" ",
+  wx.getStorage({
+    key: 'phone',
+    success: function (res) {
+      that.setData({ phone: res.data })
+    },
   })
+  wx.getStorage({
+    key: 'password',
+    success: function (res) {
+      that.setData({ password: res.data })
+    },
+  })
+
   },
   /**   * 生命周期函数--监听页面初次渲染完成   */
   onReady: function () {  },
@@ -83,38 +81,46 @@ Page({
       }
     )
   },
+  phoneInput: function (e) {
+    this.setData(
+      {
+        phone: e.detail.value
+      }
+    )
+  },
+  passwordInput: function (e) {
+    this.setData(
+      {
+        password: e.detail.value
+      }
+    )
+  },
 
   bind:function(){
     var that=this;
     wx.request({
-      url: getApp().globalData.url + '/signin?state=' +'MiniProgram',
+      url: getApp().globalData.url + 
+      '/me?typeId=' + that.data.typeId + 
+      '&name=' + that.data.name + 
+      '&number=' + that.data.Number + 
+      '&schoolId=' + that.data.School.id + 
+      '&phone=' + that.data.phone + 
+      '&password=' + that.data.password,
       header: {//请求头
-        "Content-Type": "applciation/json"
+        "Authorization": "Bearer " + getApp().globalData.jwt
       },
-      data:
-      {
-        "openId": getApp().globalData.openId,
-        "typeId" : that.data.typeId,
-        "number": that.data.Number,
-        "name": that.data.name,
-        School: {
-          "id": that.data.School.id,
-          "name": that.data.School.name,
-        }
-      },
-      method: "GET",
+      method: "PUT",
       success: function (res) {
-        console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-          if (that.data.typeId==0){
-          wx.reLaunch({
+        console.log(res.data);
+        if (that.data.typeId == 1) 
+        wx.redirectTo({
+          url: '../Teacher/TeacherMainUI',
+        })
+        else {
+          wx.redirectTo({
             url: '../Student/StudentMainUI',
           })
         }
-        else {
-          wx.reLaunch({
-            url: '../Teacher/TeacherMainUI',
-          })
-        } 
       }
     })
   },
@@ -130,6 +136,14 @@ Page({
     wx.setStorage({
       key: 'name',
       data: that.data.name,
+    })
+    wx.setStorage({
+      key: 'phone',
+      data: that.data.phone,
+    })
+    wx.setStorage({
+      key: 'password',
+      data: that.data.password,
     })
     wx.navigateTo({
       url: 'ChooseSchool?step=1&typeId=' + typeId,

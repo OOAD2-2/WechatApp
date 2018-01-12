@@ -7,49 +7,69 @@ Page({
   data: {
   Username:'',
   Usernumber:'',
-  classes:[]
+  classes:[],
+  userId:'',
+  openId:""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+  
   var that=this;
-    wx.request({
-      url: getApp().globalData.url+'/me',
-      header: {//请求头
-        "Content-Type": "applciation/json"
-      },
-      method: "GET",
-      success: function (res) {
-        console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-        that.setData({//如果在sucess直接写this就变成了wx.request()的this了.必须为getdata函数的this,不然无法重置调用函数
-          Username: res.data.name,
-          Usernumber: res.data.number,
-          studentId:res.data.id
-        }),
-        wx.setStorage(
+  wx.getStorage({
+    key: 'user',
+    success: function(res) {
+      that.setData({
+        userId:res.data.id,
+        Username: res.data.name,
+        Usernumber: res.data.number,
+      }),
+        wx.request({
+          url: getApp().globalData.url + '/class',
+          header: {//请求头
+            "Authorization": "Bearer " + getApp().globalData.jwt
+          },
+          data:
           {
-            key:"studentId",
-            data:that.data.studentId
+            userId: that.data.userId
+          },
+          method: "GET",
+          success: function (res) {
+            console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+            that.setData({
+              classes: res.data
+            })
+
           }
-        )
-      }
-    }),
-      wx.request({
-      url: getApp().globalData.url +'/student',
-        header: {//请求头
-          "Content-Type": "applciation/json"
-        },
-        method: "GET",
-        success: function (res) {
-          console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
-          that.setData({
-            classes: res.data
-          })
-          
-        }
-      })
+        })
+    },
+  })
+  wx.getStorage({
+    key: 'user',
+    success: function (res) {
+      that.setData({
+        openId: res.data.openid
+      }),
+      console.log(getApp().globalData.openid),
+        wx.request({
+          url: getApp().globalData.url + '/signin?openid=' + that.data.openId,
+          header: {//请求头
+            "Authorization": "Bearer " + getApp().globalData.jwt
+          },
+          method: "GET",
+          success: function (res) {
+            console.log(res.data);//res.data相当于ajax里面的data,为后台返回的数据
+            that.setData({//如果在sucess直接写this就变成了wx.request()的this了.必须为getdata函数的this,不然无法重置调用函数
+              Username: res.data.name,
+              Usernumber: res.data.number,
+              studentId: res.data.id
+            })
+          }
+        })
+    },
+  })
   },
 
   /**
@@ -114,7 +134,7 @@ Page({
     )
     wx.navigateTo({
       //if(class = "bax3")
-      url: 'CourseUI?courseId=' + that.data.classes[e.currentTarget.dataset.id].id + "&courseName=" + that.data.classes[e.currentTarget.dataset.id].courseName,
+      url: 'CourseUI?courseId=' + that.data.classes[e.currentTarget.dataset.id].id + "&courseName=" + that.data.classes[e.currentTarget.dataset.id].courseName+"&userId="+that.data.userId,
       success: function (res) {
         // success
       },
@@ -133,7 +153,7 @@ Page({
   onClicked2: function () {
     wx.navigateTo({
       //if(class = "bax3")
-      url: 'StudentInfo?Usernumber=' + this.Usernumber,
+      url: 'StudentInfo?userId=' + this.data.userId,
       success: function (res) {
         // success
       },
