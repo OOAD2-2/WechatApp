@@ -16,7 +16,8 @@ Page({
       seminarId: options.seminarId,
       className: options.className,
       seminarId:options.seminarId,
-      fixed: options.fixed
+      fixed: options.fixed,
+      status: options.status
     }),
       wx.request({
       url: getApp().globalData.url + '/seminar/' + options.seminarId + '/class/' + that.data.classId + '/attendance',
@@ -33,8 +34,16 @@ Page({
             name: res.data.name,
             numStudent: res.data.numStudent,
             numPresent: res.data.numPresent,
-            status: "calling"
+            status: res.data.status
           })
+          if (that.data.status == "calling") 
+          that.setData({
+            step:2
+          })
+          else if (that.data.status == "callend")
+            that.setData({
+              step: 3
+            })
         }
       })
   },

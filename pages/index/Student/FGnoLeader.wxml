@@ -1,9 +1,7 @@
-
 <view>
   <block>
     <view>
       <image class="seminarImg" src="../../images/users.png" />
-
       <!--讨论课和固定分组要加一个seminarView容器来固定位置-->
       <view class = "seminarView">
       <text class="seminarText">{{name}}</text>
@@ -43,11 +41,12 @@
       </view>
       <!--队长两个字的位置要用leaderTextView固定-->
       </view>
-
   <!-- 选题 -->
   <block>
     <view>
-      <span class="WhiteText" wx:if="{{group.leader.number==userId}}">选题:</span>
+      <span class="WhiteText" wx:if="{{group.leader.number==userId}}">选题：
+      <span wx:for="{{topics}}">{{topics[index].name}}</span>
+      </span>
     </view>
   </block>
 
