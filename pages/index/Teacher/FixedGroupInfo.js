@@ -32,7 +32,10 @@ Page({
       header: {//请求头
         "Authorization": "Bearer " + getApp().globalData.jwt
       },
-      data:{userId:wx.getStorageSync("user").id},
+      data:{
+        userId:wx.getStorageSync("user").id,
+        gradeable:false
+        },
       method: "GET",
       success: function (res) {
         console.log(res.data);
