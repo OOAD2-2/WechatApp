@@ -1,6 +1,7 @@
 // pages/index/Student/Grade.js
 Page({
 
+
   /**
    * 页面的初始数据
    */
@@ -11,7 +12,7 @@ Page({
   point:[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   group:[{name:1},{name:2},{name:3}],
   groupId:"",
-  step:"1"
+  step:1
   },
 
   /**
@@ -41,13 +42,9 @@ Page({
                 }
               ),
                 wx.request({
-                  url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group?&classId=" + that.data.classId + "&userId=" + that.data.studentId,
+                url: getApp().globalData.url + '/seminar/' + that.data.seminarId + "/group?classId=" + that.data.classId + "&userId=" + that.data.studentId +"&gradeable=true",
                   header: {//请求头
                     "Authorization": "Bearer " + getApp().globalData.jwt
-                  },
-                  data:
-                  {
-                    gradeable: true,
                   },
                   method: "GET",
                   success: function (res) {
@@ -131,7 +128,7 @@ Page({
     var that = this;
     that.setData(
       {
-        step:"2"
+        step:2
       }
     )
     for (var index in that.data.group) {

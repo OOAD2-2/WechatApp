@@ -8,21 +8,24 @@
     <view class="ScoreBoxGrey" wx:else >
     <span class="ButtonTextRight" >打分</span></view>
     
-  <view class="CallBoxBlue" wx:if="{{seminar.classCalling==1}}" bindtap="getRoll">
+  <view class="CallBoxBlue" wx:if="{{seminar.classCalling==1&& seminar.groupingMethod=='random'}}" bindtap="getRoll">
     <span class="ButtonTextLeft">签到</span>
   </view>
   <view class="CallBoxGrey" wx:else >
     <span class="ButtonTextLeft" >签到</span>
   </view>
   
-	<view class="GroupBoxBlue" style="float:" bindtap='getGroup'>
+	<view class="GroupBoxBlue" wx:if="{{seminar.classCalling==2||seminar.groupingMethod=='fixed'}}" style="float:" bindtap='getGroup'>
 	  <text class="ButtonTextLeft">组队和选题</text>
+  </view>
+  <view class="GroupBoxGrey" wx:else >
+    <span class="ButtonTextLeft" >组队和选题</span>
   </view>
 
 
 
 
-   <text class="noGroup" wx:if="{{date<seminar.startTime}}">讨论课还未开始，您可以查看固定分组信息。</text>
+   <text class="noGroup" wx:if="{{seminar.classCalling==0&& seminar.groupingMethod=='fixed'}}">讨论课还未开始，您可以查看固定分组信息。</text>
    <!--space='emsp'设置读取空格-->
-   <text class="noGroup" space='emsp' wx:if="{{date<seminar.startTime}}">   其他请讨论课开始后进行操作</text>
+   <text class="noGroup" space='emsp' wx:if="{{seminar.classCalling==0&& seminar.groupingMethod=='random'}}">   请讨论课开始后进行操作</text>
 </page>

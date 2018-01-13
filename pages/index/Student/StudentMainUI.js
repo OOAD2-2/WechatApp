@@ -134,7 +134,7 @@ Page({
     )
     wx.navigateTo({
       //if(class = "bax3")
-      url: 'CourseUI?courseId=' + that.data.classes[e.currentTarget.dataset.id].id + "&courseName=" + that.data.classes[e.currentTarget.dataset.id].courseName+"&userId="+that.data.userId,
+      url: 'CourseUI?courseId=' + that.data.classes[e.currentTarget.dataset.id].courseId + "&courseName=" + that.data.classes[e.currentTarget.dataset.id].courseName+"&userId="+that.data.userId,
       success: function (res) {
         // success
       },

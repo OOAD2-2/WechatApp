@@ -9,7 +9,7 @@ Page({
   courseId:"",
   seminar:[],
   date:"",
-  userId:"3"
+  userId:""
   },
 
   /**
